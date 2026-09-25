@@ -4,7 +4,12 @@
 # Versionen
 
 
-# Version 1.1 (NEW)
+# Version 2.0 (NEW)
+## Color Patch
+- Farbige feedback von runded addiert.
+
+
+# Version 1.1
 ## Sicherheits Patch
  - Eingabefeld wurde geändert
      - Eingabe feld nach dem Druck von Enter ist geschlossen. 

@@ -4,6 +4,7 @@ import vshchyrov.Einfaches_Spiel.Model.*;
 import vshchyrov.Einfaches_Spiel.Veiw.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,10 +16,10 @@ public class GewinnController {
         this.model = model;
         this.view = view;
 
-        // v1.1: Button "Noch einmal!" ist anfangs deaktiviert
+        // v1.1: Button "Noch einmal!" startet anfangs deaktiviert
         this.view.getBtnNochmal().setEnabled(false);
 
-        //Enter
+        // Enter-Taste im Textfeld
         this.view.getTxtSpielerZahl().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -26,8 +27,7 @@ public class GewinnController {
             }
         });
 
-
-        //noch einmal
+        // Klick auf "Noch einmal!" Button
         this.view.getBtnNochmal().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -38,7 +38,7 @@ public class GewinnController {
 
     /**
      * Führt eine Spielrunde aus, verarbeitet die Eingabe,
-     * aktualisiert das Model und sperrt nach dem Enter das Eingabefeld (v1.1).
+     * färbt die Labels ein (v2.0) und sperrt die Eingabe (v1.1).
      */
     private void spieleRunde() {
         try {
@@ -50,21 +50,29 @@ public class GewinnController {
                 view.getLblGesamtPunkte().setText("Gesamtpunkte: " + model.getGesamtPunkte());
 
                 int erg = model.getRundenErgebnis();
+
+                // v2.0: Farbliche Rückmeldung (Grün bei Gewinn, Rot bei Verlust)
                 if (erg > 0) {
                     view.getLblRundenErgebnis().setText("+" + erg);
+                    view.getLblRundenErgebnis().setBackground(Color.GREEN);
+                    view.getLblGesamtPunkte().setBackground(Color.GREEN);
                 } else {
                     view.getLblRundenErgebnis().setText(String.valueOf(erg));
+                    view.getLblRundenErgebnis().setBackground(Color.RED);
+                    view.getLblGesamtPunkte().setBackground(Color.RED);
                 }
 
                 if (model.hatGewonnen()) {
                     view.getLblRundenErgebnis().setText("Gewonnen!");
-                    view.getTxtSpielerZahl().setEnabled(false);
+                    view.getLblRundenErgebnis().setBackground(Color.GREEN);
+                    view.getLblGesamtPunkte().setBackground(Color.GREEN);
                 } else if (model.hatVerloren()) {
                     view.getLblRundenErgebnis().setText("Verloren");
-                    view.getTxtSpielerZahl().setEnabled(false);
+                    view.getLblRundenErgebnis().setBackground(Color.RED);
+                    view.getLblGesamtPunkte().setBackground(Color.RED);
                 }
 
-                // v1.1: Eingabe-Textfeld sperren und den "Noch einmal!"-Button aktivieren
+                // v1.1: Nach dem Tipp Eingabe sperren und Reset-Button aktivieren
                 view.getTxtSpielerZahl().setEnabled(false);
                 view.getBtnNochmal().setEnabled(true);
 
@@ -77,19 +85,22 @@ public class GewinnController {
     }
 
     /**
-     * Setzt das Spielfeld zurück: gibt das Eingabefeld wieder frei
-     * und deaktiviert den "Noch einmal!"-Button (v1.1).
+     * Setzt das Spielfeld zurück, stellt den weißen Standard-Hintergrund her (v2.0)
+     * und gibt das Eingabefeld wieder frei (v1.1).
      */
     private void zuruecksetzen() {
         view.getTxtSpielerZahl().setText("");
         view.getTxtComputerZahl().setText("");
         view.getLblRundenErgebnis().setText("Tippe eine Zahl von 1 bis 9");
 
+        // v2.0: Farben auf Weiß zurücksetzen
+        view.getLblRundenErgebnis().setBackground(Color.WHITE);
+        view.getLblGesamtPunkte().setBackground(Color.WHITE);
+
         // v1.1: Eingabefeld freigeben, Button wieder deaktivieren
         view.getTxtSpielerZahl().setEnabled(true);
         view.getBtnNochmal().setEnabled(false);
     }
-
 
     public static void main(String[] args) {
         GewinnModel model = new GewinnModel();
