@@ -16,7 +16,7 @@ public class GewinnView extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // Oben: Labels
+        //Labels
         JPanel pnlNorth = new JPanel(new GridLayout(2, 2));
         pnlNorth.add(new JLabel("Rundenergebnis:", SwingConstants.CENTER));
         pnlNorth.add(new JLabel("Gesamtpunkte:", SwingConstants.CENTER));
@@ -28,7 +28,7 @@ public class GewinnView extends JFrame {
         pnlNorth.add(lblGesamtPunkte);
         add(pnlNorth, BorderLayout.NORTH);
 
-        // Mitte: Eingabefelder
+        // Eingabefelder
         JPanel pnlCenter = new JPanel(new GridLayout(2, 2, 10, 10));
         pnlCenter.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
@@ -48,7 +48,7 @@ public class GewinnView extends JFrame {
         pnlCenter.add(txtComputerZahl);
         add(pnlCenter, BorderLayout.CENTER);
 
-        // Unten: Button
+        // Button
         JPanel pnlSouth = new JPanel();
         btnNochmal = new JButton("Noch einmal!");
         pnlSouth.add(btnNochmal);
