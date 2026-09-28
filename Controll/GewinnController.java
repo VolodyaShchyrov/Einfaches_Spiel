@@ -1,4 +1,4 @@
-/// Merge Conflict aufrufen 2
+/// Merge Conflict aufrufen 22
 package vshchyrov.Einfaches_Spiel.Controll;
 
 import vshchyrov.Einfaches_Spiel.Model.*;
