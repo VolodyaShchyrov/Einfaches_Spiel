@@ -1,4 +1,3 @@
-/// Merge conflict aufrufen11
 package vshchyrov.Einfaches_Spiel.Controll;
 
 import vshchyrov.Einfaches_Spiel.Model.*;
@@ -9,18 +8,33 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ *
+ * @author Volodymyr Shchyrov
+ * @version 28.09.26
+ *
+ * Der Controller steuert den Ablauf des Spiels, verbindet das Model mit der View
+ * und reagiert auf Benutzerinteraktionen (MVC-Prinzip: Controller).
+ */
 public class GewinnController {
     private GewinnModel model;
     private GewinnView view;
 
+    /**
+     * Konstruktor: Verknüpft Model und View, initialisiert Button-Zustände (v1.1)
+     * und registriert die Action-Listener für Eingaben und Resets.
+     *
+     * @param model Das Spiel-Modell (Logik)
+     * @param view Die Benutzeroberfläche (GUI)
+     */
     public GewinnController(GewinnModel model, GewinnView view) {
         this.model = model;
         this.view = view;
 
-        // v1.1: Button "Noch einmal!" startet anfangs deaktiviert
+        // v1.1: Button "Noch einmal!" startet anfangs deaktiviert, da noch nicht gespielt wurde
         this.view.getBtnNochmal().setEnabled(false);
 
-        // Enter-Taste im Textfeld
+        // Enter-Taste im Textfeld fängt die Spielereingabe ab
         this.view.getTxtSpielerZahl().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -28,7 +42,7 @@ public class GewinnController {
             }
         });
 
-        // Klick auf "Noch einmal!" Button
+        // Klick auf den "Noch einmal!"-Button setzt das Spiel zurück
         this.view.getBtnNochmal().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -38,8 +52,8 @@ public class GewinnController {
     }
 
     /**
-     * Führt eine Spielrunde aus, verarbeitet die Eingabe,
-     * färbt die Labels ein (v2.0) und sperrt die Eingabe (v1.1).
+     * Führt eine Spielrunde aus: liest die Eingabe, aktualisiert das Model,
+     * setzt die farbliche Rückmeldung (v2.0) und sperrt die Eingabe ab (v1.1).
      */
     private void spieleRunde() {
         try {
@@ -52,7 +66,7 @@ public class GewinnController {
 
                 int erg = model.getRundenErgebnis();
 
-                // v2.0: Farbliche Rückmeldung (Grün bei Gewinn, Rot bei Verlust)
+                // v2.0: Farbliche Rückmeldung (Grün bei Plus-Punkten, Rot bei Minus)
                 if (erg > 0) {
                     view.getLblRundenErgebnis().setText("+" + erg);
                     view.getLblRundenErgebnis().setBackground(Color.GREEN);
@@ -63,6 +77,7 @@ public class GewinnController {
                     view.getLblGesamtPunkte().setBackground(Color.RED);
                 }
 
+                // Prüfung auf Sieg oder Niederlage
                 if (model.hatGewonnen()) {
                     view.getLblRundenErgebnis().setText("Gewonnen!");
                     view.getLblRundenErgebnis().setBackground(Color.GREEN);
@@ -73,7 +88,7 @@ public class GewinnController {
                     view.getLblGesamtPunkte().setBackground(Color.RED);
                 }
 
-                // v1.1: Nach dem Tipp Eingabe sperren und Reset-Button aktivieren
+                // v1.1: Nach dem Tipp Eingabefeld sperren und Reset-Button aktivieren
                 view.getTxtSpielerZahl().setEnabled(false);
                 view.getBtnNochmal().setEnabled(true);
 
@@ -86,8 +101,8 @@ public class GewinnController {
     }
 
     /**
-     * Setzt das Spielfeld zurück, stellt den weißen Standard-Hintergrund her (v2.0)
-     * und gibt das Eingabefeld wieder frei (v1.1).
+     * Setzt das Spielfeld zurück: stellt den weißen Standard-Hintergrund wieder her (v2.0),
+     * gibt das Eingabefeld frei und deaktiviert den Reset-Button (v1.1).
      */
     private void zuruecksetzen() {
         view.getTxtSpielerZahl().setText("");
@@ -98,11 +113,14 @@ public class GewinnController {
         view.getLblRundenErgebnis().setBackground(Color.WHITE);
         view.getLblGesamtPunkte().setBackground(Color.WHITE);
 
-        // v1.1: Eingabefeld freigeben, Button wieder deaktivieren
+        // v1.1: Eingabefeld wieder freigeben, Button erneut deaktivieren
         view.getTxtSpielerZahl().setEnabled(true);
         view.getBtnNochmal().setEnabled(false);
     }
 
+    /**
+     * Main-Methode: Startpunkt der Anwendung. Initialisiert Model, View und Controller.
+     */
     public static void main(String[] args) {
         GewinnModel model = new GewinnModel();
         GewinnView view = new GewinnView();
